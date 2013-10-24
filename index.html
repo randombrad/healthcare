@@ -22,9 +22,11 @@
     <script src="javascripts/scale.fix.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
     <script>
-    $.getJSON('https://www.healthcare.gov/glossary/childrens-health-insurance-program-chip.json', function(d) {
+    $.getJSON('https://www.healthcare.gov/glossary/childrens-health-insurance-program-chip.json?callback=init', function(d) {
+      init(){
     $('h1').html(d.title);
     $('#content').html(d.content);
+      }
 });
     </script>
   </body>
