@@ -20,60 +20,8 @@
   </head>
   <body>
 	<div class="wrapper">
-		<h1>Healthcare Questions</h1>
-		<select onChange="updateLang(this);">
-			<option>English</option>
-			<option>Spanish</option>
-		</select>
-		<div id="content"></div>
+		<h1>Healthcare.gov Data</h1>
+		<a href="questions.html"><h3>Questions</h3></a>
 	</div>
-	<script src="javascripts/scale.fix.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
-	<script>
-		var lang = "en";
-		var updateLang = function(item) {
-			var intance = item;
-			if (intance.value == "Spanish"){
-				lang = "es";
-				console.log(intance.value);
-				$('#content').html("");
-				display(lang);
-			}else {
-				lang = "en";
-				console.log(intance.value);
-				$('#content').html("");
-				display(lang);
-			}
-		}
-
-		var display = function (lang) {
-			$.getJSON('https://www.healthcare.gov/api/questions.json', function(data) {
-				var list = $("<ol class='questions'></ol>");
-				$.each(data, function(index) {
-					var newdata= data[index];
-
-					$.each(newdata, function(i) {
-						if (newdata[i].lang == lang){
-							var item = $('<li/>');
-							var question = $('<h4/>');
-							var content = $('<p class="question-'+i+'"></p>');
-							question.html(newdata[i].title);
-							content.html(newdata[i].content);
-							item.append(question);
-							item.append(content);
-							list.append(item);
-							$('#content').append(list);
-						}
-					});
-				});
-			});
-		}
-
-		display(lang);
-
-		
-  
-		
-	</script>
   </body>
 </html>
