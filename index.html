@@ -14,20 +14,32 @@
   </head>
   <body>
     <div class="wrapper">
-      <header>
-        <h1>Healthcare-questions</h1>
-      </header>
-      <div id="content"></div>
+      <div id="content">
+      	
+      </div>
     </div>
     <script src="javascripts/scale.fix.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
     <script>
-    $.getJSON('https://www.healthcare.gov/glossary/childrens-health-insurance-program-chip.json?callback=init', function(d) {
-      function init(){
-    	$('h1').html(d.title);
-    	$('#content').html(d.content);
-      }
-	});
+
+		$.getJSON('https://www.healthcare.gov/api/questions.json', function(data) {
+        	$.each(data, function(index) {
+        		var newdata= data[index];
+        		$.each(newdata, function(i) {
+        			if (newdata[i].lang == "en"){
+        				var item = $('<div/>');
+        				var question = $('h4');
+        				var content = $('<p/>');
+        				content.html(newdata[i].content);
+        				question.html(newdata[i].title);
+        				item.append(question);
+        				question.css('font-weight', 'bold');
+        				item.append(content);
+        				$('#content').append(item);
+        			}
+        		});
+        	});
+    	});
     </script>
   </body>
 </html>
