@@ -14,32 +14,61 @@
   </head>
   <body>
     <div class="wrapper">
-      <div id="content">
+    	<h1>Healthcare Questions</h1>
+    	<select onChange="updateLang(this);">
+    		<option>English</option>
+    		<option>Spanish</option>
+    	</select>
+      	<div id="content">
       	
       </div>
     </div>
     <script src="javascripts/scale.fix.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
     <script>
+    	var lang = "en";
+    	var updateLang = function(item) {
+    		var intance = item;
+    		if (intance.value == "Spanish"){
+    			lang = "es";
+    			console.log(intance.value);
+    			$('#content').html("");
+    			display(lang);
+       		}else {
+       			lang = "en";
+    			console.log(intance.value);
+    			$('#content').html("");
+    			display(lang);
+       		}
+    	}
 
-		$.getJSON('https://www.healthcare.gov/api/questions.json', function(data) {
-        	$.each(data, function(index) {
-        		var newdata= data[index];
-        		$.each(newdata, function(i) {
-        			if (newdata[i].lang == "en"){
-        				var item = $('<div/>');
-        				var question = $('h4');
-        				var content = $('<p/>');
-        				content.html(newdata[i].content);
-        				question.html(newdata[i].title);
-        				item.append(question);
-        				question.css('font-weight', 'bold');
-        				item.append(content);
-        				$('#content').append(item);
-        			}
+    	var display = function (lang) {
+    		$.getJSON('https://www.healthcare.gov/api/questions.json', function(data) {
+	        	$.each(data, function(index) {
+	        		var newdata= data[index];
+
+	        		$.each(newdata, function(i) {
+	        			if (newdata[i].lang == lang){
+        					var item = $('<div/>');
+        					var question = $('h4');
+        					var content = $('<p/>');
+        					content.html(newdata[i].content);
+        					question.html(newdata[i].title);
+        					item.append(question);
+        					question.css('font-weight', 'bold');
+        					item.append(content);
+        					$('#content').append(item);
+        				}
+        			});
         		});
-        	});
-    	});
+    		});
+    	}
+
+    	display(lang);
+
+	    
+  
+		
     </script>
   </body>
 </html>
