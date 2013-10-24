@@ -11,6 +11,12 @@
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+
+	<style>
+		.questions {
+
+		}
+	</style>
   </head>
   <body>
 	<div class="wrapper">
@@ -19,9 +25,7 @@
 			<option>English</option>
 			<option>Spanish</option>
 		</select>
-		<div id="content">
-		
-	  </div>
+		<div id="content"></div>
 	</div>
 	<script src="javascripts/scale.fix.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
@@ -44,20 +48,21 @@
 
 		var display = function (lang) {
 			$.getJSON('https://www.healthcare.gov/api/questions.json', function(data) {
+				var list = $("<ol class='questions'></ol>");
 				$.each(data, function(index) {
 					var newdata= data[index];
 
 					$.each(newdata, function(i) {
 						if (newdata[i].lang == lang){
-							var item = $('<div/>');
-							var question = $('h4');
-							var content = $('<p/>');
-							content.html(newdata[i].content);
+							var item = $('<li/>');
+							var question = $('<h4/>');
+							var content = $('<p class="question-'+i+'"></p>');
 							question.html(newdata[i].title);
+							content.html(newdata[i].content);
 							item.append(question);
-							question.css('font-weight', 'bold');
 							item.append(content);
-							$('#content').append(item);
+							list.append(item);
+							$('#content').append(list);
 						}
 					});
 				});
